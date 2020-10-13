@@ -41,18 +41,18 @@ public class PlantaGraphSSL extends javax.swing.JPanel {
         }else {
             onOffR1.setIcon(iconOff);
         }
-        pbR2.setValue(planta.getReactores()[1].getCharge());
-        pbR2.setString(planta.getReactores()[1].getCharge() + "%");
+        pbR2.setValue(planta.getReactores()[2].getCharge());
+        pbR2.setString(planta.getReactores()[2].getCharge() + "%");
         lbEstadoR2.setText(String.valueOf(planta.getReactores()[1].getState().getLabel()));
-        if(planta.getReactores()[1].isSwitchedOn()){
+        if(planta.getReactores()[2].isSwitchedOn()){
             onOffR2.setIcon(iconOn);
         }else {
             onOffR2.setIcon(iconOff);
         }
-        pbR3.setValue(planta.getReactores()[2].getCharge());
-        pbR3.setString(planta.getReactores()[2].getCharge() + "%");
+        pbR3.setValue(planta.getReactores()[1].getCharge());
+        pbR3.setString(planta.getReactores()[1].getCharge() + "%");
         lbEstadoR3.setText(String.valueOf(planta.getReactores()[2].getState().getLabel()));
-        if(planta.getReactores()[2].isSwitchedOn()){
+        if(planta.getReactores()[1].isSwitchedOn()){
             onOffR3.setIcon(iconOn);
         }else {
             onOffR3.setIcon(iconOff);
