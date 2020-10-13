@@ -42,7 +42,7 @@ public class AdminManagerSSL {
         public void run() {
             try {
                 new IPScannerSSL();
-                IPScannerSSL.checkHosts("192.168.1", consola.getLista());//////******192.168.1
+                IPScannerSSL.checkHosts("25.109", consola.getLista());//////******192.168.1
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
