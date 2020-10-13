@@ -48,7 +48,8 @@ public class PlantControlSSL {
     public void iniciarServidor() {
         while (true) {
             try {                
-                final   SSLSocket cliente = (SSLSocket)this.servidor.accept();                
+                final   SSLSocket cliente = (SSLSocket)this.servidor.accept();  
+                System.out.println("hola");
                 ObjectOutputStream obj = new ObjectOutputStream(cliente.getOutputStream());
                 obj.writeObject(planta);                   
                 HiloRecibirSSL hr = new HiloRecibirSSL(cliente, this.planta, this);
