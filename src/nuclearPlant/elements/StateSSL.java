@@ -5,11 +5,13 @@
  */
 package nuclearPlant.elements;
 
+import java.io.Serializable;
+
 /**
  *
  * @author nata_
  */
-public class StateSSL {
+public class StateSSL implements Serializable{
     String label;
 
     public StateSSL() {

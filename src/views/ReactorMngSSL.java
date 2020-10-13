@@ -5,6 +5,8 @@
  */
 package views;
 
+import Exceptions.AlreadyDischargeException;
+import Exceptions.NotSwitchedOnException;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -317,10 +319,12 @@ public class ReactorMngSSL extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Debe encender el reactor e ingresar un valor", "Error: campo vacío", JOptionPane.ERROR_MESSAGE);
             }
             else {
-                JOptionPane.showMessageDialog(null, "Debe ingresar un valor", "Error: campo vacío", JOptionPane.ERROR_MESSAGE);
+                System.out.println(e.getMessage());
+                //JOptionPane.showMessageDialog(null, "Debe ingresar un valor", "Error: campo vacío", JOptionPane.ERROR_MESSAGE);
             }
-            //        }catch(NotSwitchedOnException e){
-            //            JOptionPane.showMessageDialog(null, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
+        }catch(NotSwitchedOnException e){
+            System.out.println(e.getMessage());
+            //JOptionPane.showMessageDialog(null, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
         }
         txtCarga.setText(null);
     }//GEN-LAST:event_btncargarActionPerformed
@@ -345,15 +349,14 @@ public class ReactorMngSSL extends javax.swing.JPanel {
             else {
                 JOptionPane.showMessageDialog(null, "Debe ingresar un valor", "Error: campo vacío", JOptionPane.ERROR_MESSAGE);
             }
-            //        }catch(NotSwitchedOnException e){
-            //            if(reactor.isSwitchedOn() == false){
-                //                JOptionPane.showMessageDialog(dialog, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
-                //            }
-            //        }catch (AlreadyDischargeException e) {
-            //            if(reactor.getCharge() == 0){
-                //                JOptionPane.showMessageDialog(dialog, "El reactor ya está completamente descargado", "Error", JOptionPane.WARNING_MESSAGE);
-                //            }
-        }
+        }catch(NotSwitchedOnException e){
+            System.out.println(e.getMessage());
+            //JOptionPane.showMessageDialog(dialog, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
+                        
+        }catch (AlreadyDischargeException e) {
+            System.out.println(e.getMessage());
+            //JOptionPane.showMessageDialog(null, "El reactor ya está completamente descargado", "Error", JOptionPane.WARNING_MESSAGE);
+        } 
         txtDescarga.setText(null);
     }//GEN-LAST:event_btndescargarActionPerformed
 

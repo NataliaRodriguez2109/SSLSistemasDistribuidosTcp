@@ -5,13 +5,16 @@
  */
 package nuclearPlant.elements;
 
+import Exceptions.AlreadyDischargeException;
+import Exceptions.NotSwitchedOnException;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author nata_
  */
-public class ReactorSSL {
+public class ReactorSSL implements Serializable{
      private boolean switchedOn;
     private int charge;
     
@@ -68,8 +71,8 @@ public class ReactorSSL {
                     charge = 0;
                 }
         }else {
-            JOptionPane.showMessageDialog(null, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
-            //throw new NotSwitchedOnException("Debe encender el reactor e ingresar un valor");
+            //JOptionPane.showMessageDialog(null, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
+            throw new NotSwitchedOnException("Debe encender el reactor e ingresar un valor");
         }
         return charge;
     }
@@ -82,8 +85,8 @@ public class ReactorSSL {
     public int dischargeReactor(int value) {
         if (switchedOn == true) {
                 if (charge == 0) {
-                JOptionPane.showMessageDialog(null, "El reactor ya está totalmente descargado", "Error", JOptionPane.ERROR_MESSAGE);
-                //throw new AlreadyDischargeException("Ya está completamente descargado");
+                //JOptionPane.showMessageDialog(null, "El reactor ya está totalmente descargado", "Error", JOptionPane.ERROR_MESSAGE);
+                throw new AlreadyDischargeException("Ya está completamente descargado");
             } else
             {
                 if((charge - value) < 0){
@@ -94,8 +97,8 @@ public class ReactorSSL {
                 }     
             }
         }else {
-            JOptionPane.showMessageDialog(null, "Debe encender el reactor para ingresar un valor", "Error", JOptionPane.ERROR_MESSAGE);
-            //throw new NotSwitchedOnException("No se ha encendido el reactor");            
+            //JOptionPane.showMessageDialog(null, "El reactor ya está totalmente descargado", "Error", JOptionPane.ERROR_MESSAGE);
+                throw new AlreadyDischargeException("Ya está completamente descargado");            
         }
         return charge;
     }

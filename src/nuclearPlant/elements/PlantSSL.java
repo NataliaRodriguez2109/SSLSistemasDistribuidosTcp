@@ -5,11 +5,13 @@
  */
 package nuclearPlant.elements;
 
+import java.io.Serializable;
+
 /**
  *
  * @author nata_
  */
-public class PlantSSL {
+public class PlantSSL implements Serializable{
     private ReactorSSL reactores[];
 
     public PlantSSL() {
