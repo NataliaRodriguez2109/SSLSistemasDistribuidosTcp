@@ -12,17 +12,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import nuclearPlant.comunications.AdminManagerSSL;
+import nuclearPlant.comunications.MessageSSL;
 
 /**
  *
  * @author nata_
  */
 public class AdmConsoleSSL extends javax.swing.JFrame {
+
     private PlantaGraphSSL pg;
     private AdminManagerSSL admm;
     private ImageIcon iconOn = new ImageIcon("src/Images/reload.png");
 
     private JPanel panel;
+
     /**
      * Creates new form AdmConsoleSSL
      */
@@ -33,19 +36,19 @@ public class AdmConsoleSSL extends javax.swing.JFrame {
         btnReload.setIcon(iconOn);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
-    
-     public JList getLista() {
+
+    public JList getLista() {
         return listaDirs;
     }
 
     public AdminManagerSSL getAdmm() {
         return admm;
     }
-    
-    public JPanel getPanel(){
+
+    public JPanel getPanel() {
         return panel;
     }
-    
+
     public void pintarPanel(JPanel panel) {
         this.panel = panel;
         panelPlanta.removeAll();
@@ -242,11 +245,11 @@ public class AdmConsoleSSL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listaDirsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaDirsMouseReleased
-        try{
+        try {
             String dirSelected1 = listaDirs.getSelectedValue();
             admm.conect(dirSelected1);
             pintarPanel(new PlantaGraphSSL(admm.getPlanta(), this));
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "No hay direcciones a seleccionar", "Error: lista vacía", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_listaDirsMouseReleased
@@ -274,6 +277,9 @@ public class AdmConsoleSSL extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReloadActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        String contenido[] = new String[4];
+        contenido[0] = "adios";        
+        admm.emit(new MessageSSL(contenido));        
         System.exit(0);
     }//GEN-LAST:event_btnCloseActionPerformed
 

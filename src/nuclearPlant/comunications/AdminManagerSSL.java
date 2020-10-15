@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.swing.JOptionPane;
 import nuclearPlant.elements.PlantSSL;
 import nuclearPlant.tools.HiloEnviarSSL;
 import nuclearPlant.tools.HiloRecibirSSL;
@@ -79,6 +80,9 @@ public class AdminManagerSSL {
 
     public void disConect() {
         try {
+            String contenido[] = new String[4];
+                contenido[0] = "adios";               
+                emit(new MessageSSL(contenido));                
             socket.close();
         } catch (Exception e) {
             System.out.println("Error al desconectar");

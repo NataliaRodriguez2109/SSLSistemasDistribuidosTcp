@@ -24,12 +24,12 @@ public class HiloEnviarSSL extends Thread{
 
     @Override
     public void run() {
-        try {            
+        try {                       
             ObjectOutputStream obj = new ObjectOutputStream(cliente.getOutputStream());
             obj.writeObject(men);
             stop();
         } catch (Exception e) {
-            System.out.println(e.getMessage() + "hola");
+            System.out.println(e.getMessage());
         }
     }
 

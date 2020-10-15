@@ -43,14 +43,13 @@ public class HiloRecibirSSL extends Thread {
             try {
                 ObjectInputStream obj = new ObjectInputStream(cliente.getInputStream());
                 men = (MessageSSL) obj.readObject();
-                System.out.println(men.getContenido()[0]);
                 if (control == null) {
                     MessageProtocolSSL.interpretar(planta, men, adm);
                 } else {
-                    MessageProtocolSSL.interpretar(planta, men, control);
+                    MessageProtocolSSL.interpretar(planta, men, control, cliente);
                 }
-            } catch (Exception e) {
-                System.out.println(e.toString());
+            } catch (Exception e) {                                
+                System.out.println(e.toString());                
             }
         }
 

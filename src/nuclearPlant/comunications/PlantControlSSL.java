@@ -21,65 +21,81 @@ import nuclearPlant.tools.HiloRecibirSSL;
  * @author nata_
  */
 public class PlantControlSSL {
+
     private SSLServerSocket servidor;
     private PlantSSL planta;
-    private ArrayList<Socket> hrs;
+    private ArrayList<HiloRecibirSSL> hrs;
 
     public PlantControlSSL() {
         this.servidor = null;
         hrs = new ArrayList<>();
         this.planta = new PlantSSL(); //32645
         try {
-            SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) 
-            SSLServerSocketFactory.getDefault();
-            this.servidor = (SSLServerSocket) 
-            sslServerSocketFactory.createServerSocket(32645); 
+            SSLServerSocketFactory sslServerSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            this.servidor = (SSLServerSocket) sslServerSocketFactory.createServerSocket(32645);
         } catch (Exception ex2) {
             System.out.println(ex2.getMessage());
         }
     }
 
-    public ArrayList<Socket> getHrs() {
+    public ArrayList<HiloRecibirSSL> getHrs() {
         return hrs;
     }
-    
-    
 
     public void iniciarServidor() {
         while (true) {
-            try {                
-                final   SSLSocket cliente = (SSLSocket)this.servidor.accept();  
+            try {
+                final SSLSocket cliente = (SSLSocket) this.servidor.accept();
                 ObjectOutputStream obj = new ObjectOutputStream(cliente.getOutputStream());
-                obj.writeObject(planta);                   
+                obj.writeObject(planta);
                 HiloRecibirSSL hr = new HiloRecibirSSL(cliente, this.planta, this);
                 hr.start();
-                hrs.add(cliente);             
+                hrs.add(hr);
                 System.out.println(hrs.size());
             } catch (Exception e) {
                 System.out.println(e.toString());
 
-            }            
-        }
-    }          
-    
-    public void updateAll(MessageSSL men){
-        for (int i = 0; i < hrs.size(); i++) {
-            emit(hrs.get(i), men);
+            }
         }
     }
-    
-    public void emit(Socket cliente, MessageSSL men){
+
+    public void updateAll(MessageSSL men) {
+        for (int i = 0; i < hrs.size(); i++) {
+            try {
+                emit(hrs.get(i).getCliente(), men);
+                System.out.println(hrs.size());
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    public void removeSocket(Socket cliente) {
+        for (int i = 0; i < hrs.size(); i++) {           
+            if (hrs.get(i).getCliente().getLocalSocketAddress().equals(cliente.getLocalSocketAddress())) {
+                try {                                                         
+                    hrs.get(i).stop();   
+                    hrs.remove(i);
+                    System.out.println(hrs.size() +"no lo resta");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }            
+        }
+    }
+
+    public void emit(Socket cliente, MessageSSL men) {
         try {
-            HiloEnviarSSL he = new HiloEnviarSSL(cliente, men);  
+            HiloEnviarSSL he = new HiloEnviarSSL(cliente, men);
             he.start();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public static void main(final String[] arguments) throws IOException {
-        System.setProperty("javax.net.ssl.keyStore","myKeystore.jks");
-        System.setProperty("javax.net.ssl.keyStorePassword","helloworld");
+        System.setProperty("javax.net.ssl.keyStore", "myKeystore.jks");
+        System.setProperty("javax.net.ssl.keyStorePassword", "helloworld");
         new PlantControlSSL().iniciarServidor();
     }
 }
